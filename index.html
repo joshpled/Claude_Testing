@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Yes!</title>
+<style>
+  html, body {
+    margin: 0;
+    height: 100%;
+    background: #111;
+    font-family: system-ui, sans-serif;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #yesButton {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: none;
+    background: #e53935;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 -6px 0 rgba(0, 0, 0, 0.25);
+    transition: transform 0.08s ease, box-shadow 0.08s ease;
+  }
+  #yesButton:hover { background: #f44336; }
+  #yesButton:active {
+    transform: translateY(3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 -3px 0 rgba(0, 0, 0, 0.25);
+  }
+</style>
+</head>
+<body>
+  <button id="yesButton" aria-label="Yes">YES</button>
+  <script>
+    const btn = document.getElementById('yesButton');
+
+    function sayYes() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance('Yes!');
+      utter.rate = 1.25;
+      utter.pitch = 1.7;
+      utter.volume = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const preferred = voices.find(v => /en[-_]/i.test(v.lang) && /female|samantha|zira|karen/i.test(v.name))
+        || voices.find(v => /^en/i.test(v.lang));
+      if (preferred) utter.voice = preferred;
+      window.speechSynthesis.speak(utter);
+    }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {};
+    }
+
+    btn.addEventListener('click', sayYes);
+  </script>
+</body>
+</html>
