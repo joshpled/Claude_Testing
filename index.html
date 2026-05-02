@@ -44,8 +44,8 @@
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance('Lizard');
-      utter.rate = 1;
-      utter.pitch = 1.8;
+      utter.rate = 1.5;
+      utter.pitch = 2;
       utter.volume = 1;
       const voices = window.speechSynthesis.getVoices();
       const preferred = voices.find(v => /^en/i.test(v.lang));
